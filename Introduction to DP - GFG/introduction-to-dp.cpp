@@ -11,7 +11,7 @@ using namespace std;
  long long int dp[100001];
 class Solution {
   public:
-  long long int td(int n,vector<int>&dp){
+  long long int td(int n){
       if(n==0) return 0;
       if(n==1) return 1;
       long long int prev2=0;
@@ -24,12 +24,12 @@ class Solution {
       return prev1;
   }
     long long int topDown(int n) {
-        vector<int>dp(n+1,-1);
-        return td(n,dp);
+       
+        return td(n);
     }
     long long int bottomUp(int n) {
-          vector<int>dp(n+1,-1);
-       return td(n,dp);
+       
+       return td(n);
     }
 };
 
