@@ -50,8 +50,37 @@ public:
         return ans;
         
     }
+    int solveSpace(int n,int m,vector<vector<int>>&mat){
+        vector<int>prev(m+1,0);
+        vector<int>curr(m+1,0);
+        int ans=0;
+       for(int i=n-1;i>=0;i--){
+            for( int j=m-1;j>=0;j--){
+                if(mat[i][j]==1){
+                    int right=0,down=0,diagonal=0;
+                if(i<n && j+1<m)
+                 right=curr[j+1];
+                 if(i+1<n && j<m)
+                 down=prev[j];
+                 if(i+1<n && j+1<m)
+                 diagonal=prev[j+1];
+                 int val=min(right,min(down,diagonal));
+                 ans=max(val+1,ans);
+                 curr[j]=val+1;
+                }
+                else{
+                    curr[j]=0;
+                }
+                
+            }
+            prev=curr;
+        }
+        return ans;
+    }
+    
+    
     int maxSquare(int n, int m, vector<vector<int>> mat){
-      return solveTab(n,m,mat);
+      return solveSpace(n,m,mat);
     }
 };
 
