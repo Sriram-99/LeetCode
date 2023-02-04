@@ -26,11 +26,32 @@ public:
         dp[i][j]=val+1;
         return val+1;
     }
+    
+    int solveTab(int n, int m, vector<vector<int>> mat){
+        vector<vector<int>>dp(n,vector<int>(m,0));
+        int ans=0;
+        for(int i=n-1;i>=0;i--){
+            for( int j=m-1;j>=0;j--){
+                if(mat[i][j]==1){
+                    int right=0,down=0,diagonal=0;
+                if(i<n && j+1<m)
+                 right=dp[i][j+1];
+                 if(i+1<n && j<m)
+                 down=dp[i+1][j];
+                 if(i+1<n && j+1<m)
+                 diagonal=dp[i+1][j+1];
+                 int val=min(right,min(down,diagonal));
+                 ans=max(val+1,ans);
+                 dp[i][j]=val+1;
+                }
+                
+            }
+        }
+        return ans;
+        
+    }
     int maxSquare(int n, int m, vector<vector<int>> mat){
-       int ans=0;
-       vector<vector<int>>dp(n,vector<int>(m,-1));
-       solve(n,m,mat,ans,0,0,dp);
-      return ans;
+      return solveTab(n,m,mat);
     }
 };
 
