@@ -14,10 +14,14 @@ class Solution {
   long long int td(int n,vector<int>&dp){
       if(n==0) return 0;
       if(n==1) return 1;
-      if(dp[n]!=-1) return dp[n];
-      long long int val=(td(n-1,dp)+td(n-2,dp));
-      dp[n]=val%MOD;
-      return dp[n];
+      long long int prev2=0;
+      long long int prev1=1;
+      for(int i=2;i<=n;i++){
+          long long int curr=(prev1+prev2)%MOD;
+          prev2=prev1;
+          prev1=curr;
+      }
+      return prev1;
   }
     long long int topDown(int n) {
         vector<int>dp(n+1,-1);
