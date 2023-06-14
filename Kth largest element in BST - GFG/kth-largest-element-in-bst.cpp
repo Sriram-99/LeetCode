@@ -100,14 +100,6 @@ class Solution
     int ans=0;
     bool found(Node*root,int k,int &cnt){
         if(!root) return 0;
-        if(!root->left  && !root->right){
-            cnt++;
-            if(cnt==k){
-                ans=root->data;
-                return 1;
-            }
-            return 0;
-        }
        bool right= found(root->right,k,cnt);
        if(right) return 1;
        cnt++;
