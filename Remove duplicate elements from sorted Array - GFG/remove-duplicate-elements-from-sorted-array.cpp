@@ -11,19 +11,17 @@ using namespace std;
 class Solution{
 public:
     int remove_duplicate(int a[],int n){
-        if(n==0) return 0;
-        int cnt=1;
-        int val=a[0];
-        int pos=1;
-        for(int i=1;i<n;i++){
-            if(a[i]==val) continue;
-            cnt++;
-            val=a[i];
-            a[pos]=a[i];
-            pos++;
-        }
-        return cnt;
-        
+      int val=a[0];
+      int pos=1;
+      int cnt=1;
+      for(int i=1;i<n;i++){
+          if(a[i]>val){
+              val=a[i];
+              swap(a[pos],a[i]);
+              pos++;
+          }
+      }
+      return pos;
     }
 };
 
