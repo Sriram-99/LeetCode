@@ -56,6 +56,23 @@ public:
         return curr[tar];
     }
     
+    bool solveSpace2(int n,int arr[],int tar){
+        vector<bool>curr(tar+1,0);
+        
+        curr[0]=1;
+        for(int index=n-1;index>=0;index--){
+            
+            for(int target=tar;target>=1;target--){
+                bool inc =0;
+                if(target-arr[index]>=0)
+                 inc=curr[target-arr[index]];
+                bool exc=curr[target];
+                curr[target]=(inc || exc);
+            }
+        }
+        return curr[tar];
+    }
+    
     
     int equalPartition(int N, int arr[])
     {
@@ -68,7 +85,7 @@ public:
        
         // vector<vector<int>>dp(N+1,vector<int>(sum/2+1,-1));
     
-      return solveSpace(N,arr,sum/2);
+      return solveSpace2(N,arr,sum/2);
     }
 };
 
