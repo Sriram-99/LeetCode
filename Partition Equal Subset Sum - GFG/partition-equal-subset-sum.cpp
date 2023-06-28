@@ -18,6 +18,23 @@ public:
         bool exc=solve(n,arr,target,index+1,dp);
        return  dp[index][target] =(inc|| exc);
     }
+    bool solveTab(int n,int arr[],int tar){
+        
+        vector<vector<bool>>dp(n+1,vector<bool>(tar+1,0));
+        for(int i=0;i<n+1;i++){
+            dp[i][0]=1;
+        }
+        for(int index=n-1;index>=0;index--){
+            for(int target=1;target<=tar;target++){
+                bool inc =0;
+                if(target-arr[index]>=0)
+                 inc=dp[index+1][target-arr[index]];
+                bool exc=dp[index+1][target];
+                dp[index][target]=(inc || exc);
+            }
+        }
+        return dp[0][tar];
+    }
     int equalPartition(int N, int arr[])
     {
         
@@ -27,9 +44,9 @@ public:
         }
           if(sum%2==1) return 0;
        
-        vector<vector<int>>dp(N+1,vector<int>(sum/2+1,-1));
+        // vector<vector<int>>dp(N+1,vector<int>(sum/2+1,-1));
     
-      return solve(N,arr,sum/2,0,dp);
+      return solveTab(N,arr,sum/2);
     }
 };
 
