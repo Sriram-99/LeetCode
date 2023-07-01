@@ -11,48 +11,48 @@ using namespace std;
 class Solution 
 {
     public:
-    //Function to find minimum number of pages.
-   
-   bool ispossible(int A[],int N,int M,int mid){
-       int cnt=1;
-       int sum=0;
-       for(int i=0;i<N;i++){
-           if(sum+A[i]<=mid){
-               sum+=A[i];
-           }
-           else{
-               cnt++;
-               if(cnt>M || A[i]>mid) return false;
-               sum=A[i];
-           }
-       }
+    bool ispossible(int arr[],int n,int m,int mid){
+        int cnt=1;
+        int val=0;
+        
+        for(int i=0;i<n;i++){
+            if(val+arr[i]<=mid){
+                val+=arr[i];
+            }
+            else{
+                cnt++;
+                if(cnt>m || arr[i]>mid) return false;
+                val=arr[i];
+            }
+        }
+       if(cnt<m) false ;
        return true;
-   }
-   
-   
+        
+    }
+    //Function to find minimum number of pages.
     int findPages(int A[], int N, int M) 
     {
         if(M>N) return -1;
-        int sum=0;
-        for(int i=0;i<N;i++){
-            sum+=A[i];
-        }
-        
-        int ans=-1;
-        int s=0;
+       int sum=0;
+       for(int i=0;i<N;i++){
+           sum+=A[i];
+       }
+       
+       int s=1;
         int e=sum;
+        int ans=INT_MAX;
         while(s<=e){
-            int mid=s+(e-s)/2;
+            int mid=(s+e)/2;
             if(ispossible(A,N,M,mid)){
-                ans=mid;
+                ans=min(ans,mid);
                 e=mid-1;
             }
             else{
                 s=mid+1;
             }
         }
-        return ans;
-        
+       if(ans==INT_MAX) return -1;
+       return ans;
     }
 };
 
