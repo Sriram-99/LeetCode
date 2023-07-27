@@ -92,30 +92,29 @@ struct Node
 }; */
 
 class Solution {
-  public:
-  void diam(Node*root,int &height,int &ans){
-      if(!root){
-          height=0;
-          return;
-      }
-      int lh=0;
-      int rh=0;
-      diam(root->left,lh,ans);
-      diam(root->right,rh,ans);
-      int val=lh+rh+1;
-      height=max(lh,rh)+1;
-      ans=max(ans,val);
-      return;
-      
-  }
+public:
+    int solve(Node* root, int& ht) {
+        if (root == NULL) {
+            ht = 0;
+            return 0;
+        }
+
+        int lh = 0;
+        int rh = 0;
+        int ldia = solve(root->left, lh);
+        int rdia = solve(root->right, rh);
+        int through_root_dia = lh + rh + 1; // Diameter passing through the root
+        ht = max(lh, rh) + 1;
+        return max(through_root_dia, max(ldia, rdia));
+    }
+
     // Function to return the diameter of a Binary Tree.
     int diameter(Node* root) {
-        int height=0;
-        int ans=0;
-        diam(root,height,ans);
-        return ans;
+        int ht = 0;
+        return solve(root, ht);
     }
 };
+
 
 //{ Driver Code Starts.
 
