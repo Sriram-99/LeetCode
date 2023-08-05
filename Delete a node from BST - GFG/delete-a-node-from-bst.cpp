@@ -109,37 +109,29 @@ int main() {
 
 
 // Function to delete a node from BST.
-int predic(Node*root){
-    while(root->left){
+int inordersucc(Node* root){
+    while(root && root->left){
         root=root->left;
     }
     return root->data;
 }
-Node *deleteNode(Node *root, int x) {
-   if(!root) return NULL;
-   if(root->data==x){
-       if(!root->left && !root->right){
-           delete root;
-           return NULL;
-       }
-       if(!root->left && root->right){
-           Node*temp=root->right;
-           delete root;
-           return temp;
-       }
-       else if(root->left && !root->right){
-           Node*temp=root->left;
-           delete root;
-           return temp;
-       }
-       else{
-           int val=predic(root->right);
-           root->data=val;
-           root->right=deleteNode(root->right,val);
-       }
-       return root;
-   }
-   root->left=deleteNode(root->left,x);
-   root->right=deleteNode(root->right,x);
-   return root;
+Node *deleteNode(Node *root, int X) {
+    if(!root) return root;
+    if(root->data>X){
+        root->left=deleteNode(root->left,X);
+    }
+    else if(root->data<X){
+        root->right=deleteNode(root->right,X);
+    }
+    else{
+        if(!root->left) return root->right;
+        else if(!root->right) return root->left;
+        else{
+            int val=inordersucc(root->right);
+            root->data=val;
+            root->right=deleteNode(root->right,val);
+        }
+    }
+    return root;
+    
 }
