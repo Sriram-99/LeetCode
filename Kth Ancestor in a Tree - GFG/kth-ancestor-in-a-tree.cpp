@@ -111,39 +111,31 @@ struct Node
 };
 */
 // your task is to complete this function
-bool ancestor(Node*root,int &pos,int k,int node,int &ans){
-    if(!root) return 0;
-    if(root->data==node){
-        pos=1;
-        return 1;
-    }
-    int pos1=-1;
-    int pos2=-1;
-    bool left=ancestor(root->left,pos1,k,node,ans);
-    bool right=ancestor(root->right,pos2,k,node,ans);
-    if(left){
-        if(pos1==k){
+int solve(Node* root,int k,int node,int &ans){
+     if(!root) return -1;
+    if(root->data==node) return 0;
+    int val1=solve(root->left,k,node,ans);
+    if(val1!=-1){
+        if(1+val1==k){
             ans=root->data;
         }
-        pos1++;
-            pos=pos1;
-            return 1;
+        return val1+1;
     }
-    if(right){
-        if(pos2==k){
+    int val2=solve(root->right,k,node,ans);
+    if(val2!=-1){
+        if(1+val2==k){
             ans=root->data;
         }
-           pos2++;
-            pos=pos2;
-            return 1;
+        return val2+1;
     }
-    return 0;
+    return -1;
+    
 }
+
 int kthAncestor(Node *root, int k, int node)
 {
     int ans=-1;
-    int pos=0;
-    ancestor(root,pos,k,node,ans);
-    return ans;
+   solve(root,k,node,ans);
+   return ans;
     
 }
