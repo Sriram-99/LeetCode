@@ -9,37 +9,19 @@ using namespace std;
 
 class Solution{
 	public:
-	int minsq(int n,vector<int>&dp){
-	    if(n==0) return 0;
-	    if(n<0) return INT_MAX;
-	    if(dp[n]!=-1) return dp[n];
-	    int ans=INT_MAX;
-	    for(int i=1;i*i<=n;i++){
-	        int val=minsq(n-(i*i),dp);
-	        if(val!=INT_MAX) ans=min(ans,val+1);
-	    }
-	    dp[n]=ans;
-	    return ans;
-	}
-	int minsqTab(int n){
-	    vector<int>dp(n+1,INT_MAX);
-	    dp[0]=0;
-	    for(int i=1;i<n+1;i++){
-	        
-	        for(int j=1;j*j<=i;j++){
-	           int temp=j*j;
-	           if((i-temp)>=0 && dp[i-j*j]!=INT_MAX){
-	               dp[i]=min(dp[i],dp[i-j*j]+1);
-	           }
-	            
-	        }
-	       
-	    }
-	    return dp[n];
-	}
 	int MinSquares(int n)
 	{
-	    return minsqTab(n);
+	    vector<int>dp(n+1,0);
+	    
+	    for(int i=1;i<=n;i++){
+	        int val=INT_MAX;
+	        for(int j=1;j*j<=i;j++){
+	            int temp=1+dp[i-(j*j)];
+	            val=min(val,temp);
+	        }
+	        dp[i]=val;
+	    }
+	    return dp[n];
 	}
 };
 
