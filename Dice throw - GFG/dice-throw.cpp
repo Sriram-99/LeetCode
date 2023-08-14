@@ -5,41 +5,23 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    long long solve(int faces,int dices,int target,vector<vector<long long>>&dp){
-        //base case 
-        if(faces==0 || target<0) return 0;
-        if(dices==0 && target!=0 ) return 0;
-        if(dices==0 && target==0) return 1;
-        if(dp[dices][target]!=-1) return dp[dices][target];
-        long long ans=0;
-        for(int i=1;i<=faces;i++){
-            ans+=solve(faces,dices-1,target-i,dp);
-        }
-        return dp[dices][target]=ans;
-            
-    }
-    
-    long long solveTab(int faces,int dices,int target){
-        vector<vector<long long>>dp(dices+1,vector<long long>(target+1,0));
-        //
-        dp[0][0]=1;
-        for(int index=1;index<=dices;index++){
-            for(int value=1;value<=target;value++){
-                long long sum=0;
-                for(int i=1;i<=faces;i++){
-                    if(value-i>=0){
-                        sum+=dp[index-1][value-i];
+  #define MOD 1000000007
+    long long noOfWays(int M , int N , int X) {
+       vector<vector<long long>>dp(N+1,vector<long long>(X+1,0));
+       dp[0][0]=1;
+       
+        for(int val=1;val<=X;val++){
+            for(int cnt=1;cnt<=N;cnt++ ){
+                long long  val1=0;
+                for(int i=1;i<=M;i++){
+                    if(val-i>=0){
+                         val1=(val1+dp[cnt-1][val-i]);
                     }
-                    
                 }
-                dp[index][value]=sum;
+                dp[cnt][val]=val1;
             }
         }
-        return dp[dices][target];
-    }
-    long long noOfWays(int M , int N , int X) {
-        // vector<vector<long long>>dp(N+1,vector<long long>(X+1,-1));
-        return solveTab(M,N,X);
+        return dp[N][X];
     }
 };
 
