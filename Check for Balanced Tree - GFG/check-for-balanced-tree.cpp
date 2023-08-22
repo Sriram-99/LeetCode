@@ -104,29 +104,26 @@ struct Node
 class Solution{
     public:
     //Function to check whether a binary tree is balanced or not.
-    bool balanced(Node*root,int & height){
-        if(!root) {
-            height=1;
-            return 1;
+    bool solve(Node*root,int &height){
+        if(!root){
+            height=0;
+            return true;
         }
-        int l=0;
-        int r=0;
-        bool lh=balanced(root->left,l);
-        bool rh=balanced(root->right,r);
-        if(!lh || !rh) return 0;
-        if(abs(l-r)>1){
-            return 0;
-        }
-        height=1+max(l,r);
-        return 1;
-        
+        int lh=0;
+        int rh=0;
+         bool lval=solve(root->left,lh);
+         if(!lval) return lval;
+         bool rval=solve(root->right,rh);
+         if(!rval) return rval;
+         if(abs(lh-rh)>1) return false;
+         height=1+max(lh,rh);
+         return true;
     }
     bool isBalanced(Node *root)
     {
-        int height=0;
-        return balanced(root,height);
+       int height=0;
+       return solve(root,height);
     }
-       
 };
 
 
