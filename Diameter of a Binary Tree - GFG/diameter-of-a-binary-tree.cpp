@@ -95,18 +95,17 @@ class Solution {
   public:
     // Function to return the diameter of a Binary Tree.
     int solve(Node*root,int &height){
-        if(!root) {
+        if(!root){
             height=0;
             return 0;
         }
         int lh=0;
         int rh=0;
-        int left_dia=solve(root->left,lh);
-        int right_dia=solve(root->right,rh);
-        int ans=max(lh+rh+1,max(left_dia,right_dia));
-        height=max(lh,rh)+1;
-        return ans;
-        
+        int lval=solve(root->left,lh);
+        int rval=solve(root->right,rh);
+        int dia=lh+rh+1;
+        height=1+max(lh,rh);
+        return max(lval,max(rval,dia));
     }
     int diameter(Node* root) {
         int height=0;
