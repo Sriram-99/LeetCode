@@ -65,33 +65,20 @@ struct Node
 };*/
 
 //Function to return a tree created from postorder and inoreder traversals.
-int search(int in[], int start, int end, int val) {
-    if (start > end) return -1;
-    if (start == end) return start;
-    for (int i = start; i <= end; i++) {
-        if (in[i] == val) return i;
+Node*solve(int in[],int pre[],int n,int& index,int start,int end){
+        if(index==-1 || start>end) return NULL;
+        Node*root=new Node(pre[index]);
+        int i;
+        for( i=start;i<=end;i++){
+            if(pre[index]==in[i]) break;
+        }
+        index--;
+         root->right=solve(in,pre,n,index,i+1,end);
+        root->left=solve(in,pre,n,index,start,i-1);
+       
+        return root;
     }
-    return -1;  // Return -1 if the value is not found
+Node *buildTree(int in[], int post[], int n) {
+    int index=n-1;
+    return solve(in,post,n,index,0,n-1);
 }
-
-Node* build(int in[], int post[], int start, int end, int& idx) {
-    if (start > end) return NULL;
-
-    int val = post[idx];
-    int pos = search(in, start, end, val);
-    if (pos == -1) return NULL;
-
-    Node* ans = new Node(val);
-    idx--;
-
-    ans->right = build(in, post, pos + 1, end, idx);
-    ans->left = build(in, post, start, pos - 1, idx);
-
-    return ans;
-}
-
-Node* buildTree(int in[], int post[], int n) {
-    int idx = n - 1;  // Start with the last element of the postorder array
-    return build(in, post, 0, n - 1, idx);
-}
-
