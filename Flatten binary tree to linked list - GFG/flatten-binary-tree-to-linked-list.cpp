@@ -101,18 +101,21 @@ class Solution
     public:
     void flatten(Node *root)
     {
-        if(root==NULL || root->left==NULL && root->right==NULL) return ;
-        if(root->left){
-            flatten(root->left);
-            Node*temp=root->right;
-            root->right=root->left;
-            root->left=NULL;
-            Node*temp2=root;
-            while(temp2->right) temp2=temp2->right;
-            temp2->right=temp;
-            
-        }
-        flatten(root->right);
+       if(!root) return ;
+       if(!root->left) {
+           flatten(root->right);
+           return ;
+       }
+       Node*ff=root->right;
+       root->right=root->left;
+       root->left=NULL;
+       Node*temp=root->right;
+       while(temp->right){
+           temp=temp->right;
+       }
+       temp->right=ff;
+       flatten(root->right);
+       return ;
     }
 };
 
