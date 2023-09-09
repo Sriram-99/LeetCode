@@ -97,29 +97,24 @@ struct Node {
 class Solution
 {
     public:
-    int ans=0;
-    bool found(Node*root,int k,int &cnt){
-        if(!root) return 0;
-       bool right= found(root->right,k,cnt);
-       if(right) return 1;
-       cnt++;
-       if(k==cnt){
-             ans=root->data;
-                return 1;
+    void solve(Node* root,int k, int &ans,int &cnt){
+        if(!root) return ;
+       solve(root->right,k,ans,cnt);
+       if(cnt==k){
+           ans=root->data;
+           
        }
-       bool left=found(root->left,k,cnt);
-       if(left) return 1;
-       return 0;
-        
+       cnt++;
+       solve(root->left,k,ans,cnt);
     }
     int kthLargest(Node *root, int K)
     {
-        int cnt=0;
-       bool val=found(root,K,cnt);
-       if(val) return ans;
-       return -1;
-       
+     int ans=-1;
+     int cnt=1;         
+     solve(root,K,ans,cnt);
+     return ans;
     }
+    
 };
 
 //{ Driver Code Starts.
